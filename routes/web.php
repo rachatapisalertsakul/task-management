@@ -62,6 +62,7 @@ Route::middleware('chklogin')->group(function () {
     route::get('/remove_project/{id}', 'App\Http\Controllers\TaskController@remove_project')->name('remove_project');
 
     route::get('/task_list/{id_project}', 'App\Http\Controllers\TaskController@task_list')->name('task_list');
+    route::get('/task_list/{id_project}/sort/{type}', 'App\Http\Controllers\TaskController@sort_tasks')->name('sort_tasks');
     route::get('/task_detail/{id_task}', 'App\Http\Controllers\TaskController@task_detail')->name('task_detail');
     route::post('/task_detail/insert_checklist', 'App\Http\Controllers\TaskController@insert_checklist')->name('insert_checklist');
     route::get('/task_detail/update_checklist/{id_task}/{id}/{value}', 'App\Http\Controllers\TaskController@update_checklist')->name('update_checklist');

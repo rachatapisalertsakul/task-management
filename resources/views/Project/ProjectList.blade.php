@@ -17,7 +17,7 @@
                     <ul class="nk-block-tools g-3">
                         @if ($filter_id)
                             <li>
-                                <span style="font-size: 10px;">Filter By : <a href="{{ route('project_list') }}" class="btn btn-dim btn-outline-danger btn-file mr-1" onclick="return confirm('Are you sure to remove filter?');" style="font-size: 9px;">{{ $filter_person->role }} - {{ $filter_person->firstname }} {{ $filter_person->lastname }} <em class="icon ni ni-trash"></em></a></span>
+                                <span style="font-size: 10px;">Filter By : <a href="{{ route('project_list') }}" class="btn btn-dim btn-outline-danger btn-file mr-1" onclick="return confirm('Are you sure to remove filter?');" style="font-size: 9px;">{{ $filter_person->name_project }} <em class="icon ni ni-trash"></em></a></span>
                             </li>
                         @endif
                         <li>
@@ -28,9 +28,14 @@
                                     <!-- <em class="dd-indc icon ni ni-chevron-right"></em> -->
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <ul class="link-list-opt no-bdr">
-                                        @foreach ($member as $key => $person)
-                                            <li><a href="{{ route('project_list', ['filter' => $key]) }}"><span>{{ $person }}</span></a></li>
+                                <input type="text" class="form-control" id="filterInput" onkeyup="filterBy()" placeholder="Search for names.." title="Type in a name">
+                                    <ul id="myUL" class="link-list-opt no-bdr">
+                                        @foreach ($project as $key => $item)
+                                            @if($_SESSION['role'] == 'Chief')
+                                                <li><a href="{{ route('project_list', ['filter' => $item->id_project]) }}"><span>{{ $item->name_project }}</span></a></li>
+                                            @elseif(count($item->is_myproject) >= 1)
+                                                <li><a href="{{ route('project_list', ['filter' => $item->id_project]) }}"><span>{{ $item->name_project }}</span></a></li>
+                                            @endif
                                         @endforeach
                                     </ul>
                                 </div>
@@ -54,8 +59,14 @@
         @foreach($project as $p)
         <!-- เช็คว่า หากไม่ใช่ project ของ user นั้นให้ข้าม ยกเว้น cheif จะเห็นทั้งหมด -->
         @if($_SESSION['role'] == 'Chief')
-            <!-- แสดงโปรเจค -->
-        @elseif($filter_id && count($p->is_myproject) >= 2)
+            @if($filter_id && count($p->is_myproject) >= 1)
+                <!-- แสดงโปรเจค -->
+            @elseif ($filter_id && count($p->is_myproject) >= 0)
+                @continue <!-- ข้าม -->
+            @else
+                <!-- แสดงโปรเจค -->
+            @endif
+        @elseif($filter_id && count($p->is_myproject) >= 1)
             <!-- แสดงโปรเจค -->
         @elseif (!$filter_id && count($p->is_myproject) >= 1)
             <!-- แสดงโปรเจค -->
@@ -227,5 +238,23 @@
     </div>
 </div>
 
+<script>
+function filterBy() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("filterInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+</script>
 
 @endsection

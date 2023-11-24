@@ -16,8 +16,8 @@ class TaskController extends Controller
         // หน้ารวม Project
         $filter_id = $request->filter;
         if($filter_id) {
-            $check_user = [$_SESSION['id_user'], $filter_id];
-            $filter_person = DB::table('user')->where('id_user', $filter_id)->first();
+            $check_user = [$_SESSION['id_user']];
+            $filter_person = DB::table('project')->where('id_project', $filter_id)->first();
         } else {
             $check_user = [$_SESSION['id_user']];
             $filter_person = [];
@@ -29,7 +29,13 @@ class TaskController extends Controller
 
         foreach ($project as $key => $p) {
             // เช็คว่าเป็น user นั้นอยู่ใน task ไหม
-            $p->is_myproject = DB::table('project_team')->whereIn('ref_id_user', $check_user)->where('ref_id_project', $p->id_project)->get();
+            if($filter_id && $_SESSION['role'] != 'Chief') {
+                $p->is_myproject = DB::table('project_team')->whereIn('ref_id_user', $check_user)->where('ref_id_project', $p->id_project)->where('ref_id_project', $filter_id)->get();
+            } elseif($filter_id && $_SESSION['role'] == 'Chief') {
+                $p->is_myproject = DB::table('project_team')->where('ref_id_project', $p->id_project)->where('ref_id_project', $filter_id)->get();
+            } else {
+                $p->is_myproject = DB::table('project_team')->whereIn('ref_id_user', $check_user)->where('ref_id_project', $p->id_project)->get();
+            }
 
             $p->task = DB::table('task')->where('is_deleted', 0)->where('ref_id_project', $p->id_project)->get();
             $p->team = DB::table('project_team')
@@ -45,6 +51,8 @@ class TaskController extends Controller
         }
 
         $member = array_unique($member);
+
+        // dd($project);
 
         return view('Project.ProjectList', compact('user', 'project', 'member', 'filter_id', 'filter_person'));
     }
@@ -135,6 +143,7 @@ class TaskController extends Controller
             $task->checklist = DB::table('task_checklist')->where('ref_id_task', $task->id_task)->where('is_deleted', 0)->get();
             $all_checklist = DB::table('task_checklist')->where('ref_id_task', $task->id_task)->where('is_deleted', 0)->count();
             $checked_checklist = DB::table('task_checklist')->where('ref_id_task', $task->id_task)->where('is_checked', 1)->where('is_deleted', 0)->count();
+            $task->created_name = DB::table('user')->where('id_user', $task->created_by)->first();
             if($all_checklist) {
                 $task->percents = number_format(($checked_checklist/$all_checklist)*100, 2, '.', '');
             } else {
@@ -148,6 +157,7 @@ class TaskController extends Controller
             $task->checklist = DB::table('task_checklist')->where('ref_id_task', $task->id_task)->where('is_deleted', 0)->get();
             $all_checklist = DB::table('task_checklist')->where('ref_id_task', $task->id_task)->where('is_deleted', 0)->count();
             $checked_checklist = DB::table('task_checklist')->where('ref_id_task', $task->id_task)->where('is_checked', 1)->where('is_deleted', 0)->count();
+            $task->created_name = DB::table('user')->where('id_user', $task->created_by)->first();
             if($all_checklist) {
                 $task->percents = number_format(($checked_checklist/$all_checklist)*100, 2, '.', '');
             } else {
@@ -161,6 +171,7 @@ class TaskController extends Controller
             $task->checklist = DB::table('task_checklist')->where('ref_id_task', $task->id_task)->where('is_deleted', 0)->get();
             $all_checklist = DB::table('task_checklist')->where('ref_id_task', $task->id_task)->where('is_deleted', 0)->count();
             $checked_checklist = DB::table('task_checklist')->where('ref_id_task', $task->id_task)->where('is_checked', 1)->where('is_deleted', 0)->count();
+            $task->created_name = DB::table('user')->where('id_user', $task->created_by)->first();
             if($all_checklist) {
                 $task->percents = number_format(($checked_checklist/$all_checklist)*100, 2, '.', '');
             } else {
@@ -174,6 +185,7 @@ class TaskController extends Controller
             $task->checklist = DB::table('task_checklist')->where('ref_id_task', $task->id_task)->where('is_deleted', 0)->get();
             $all_checklist = DB::table('task_checklist')->where('ref_id_task', $task->id_task)->where('is_deleted', 0)->count();
             $checked_checklist = DB::table('task_checklist')->where('ref_id_task', $task->id_task)->where('is_checked', 1)->where('is_deleted', 0)->count();
+            $task->created_name = DB::table('user')->where('id_user', $task->created_by)->first();
             if($all_checklist) {
                 $task->percents = number_format(($checked_checklist/$all_checklist)*100, 2, '.', '');
             } else {
@@ -200,6 +212,7 @@ class TaskController extends Controller
                         'priority' => $request->priority,
                         'assign_to' => $request->task_team ? implode(",", $request->task_team) : '',
                         'status' => 0,
+                        'created_by' => $_SESSION['id_user'],
                         'created_at' => now()
                     ]
                 );
@@ -318,6 +331,36 @@ class TaskController extends Controller
         }
 
         return redirect()->back()->with('success', 'Update Task Information Successfully!');
+    }
+
+    public function sort_tasks($id_project, $type)
+    {
+        try {
+            if($type == 'priority') { // sort by priority
+                $tasks = DB::table('task')->where('ref_id_project', $id_project)->where('is_deleted', 0)->orderBy('priority', 'asc')->orderBy('created_at', 'desc')->get();
+            } else if ($type == 'due_date') { // sort by due date
+                $tasks = DB::table('task')->where('ref_id_project', $id_project)->where('is_deleted', 0)->orderBy('due_date', 'desc')->orderBy('created_at', 'desc')->get();
+            }
+            
+            $index = 100;
+            foreach($tasks as $key => $item) {
+                // update ข้อมูล
+                DB::table('task')->where('id_task', $item->id_task)
+                    ->update(
+                        [
+                            'index' => $index
+                        ]
+                    );
+
+                $index--;
+            }
+            
+            
+        } catch (\Exception $e) {
+            return redirect()->back()->with('danger', $e->getMessage());
+        }
+
+        return redirect()->back()->with('success', 'Sorted Successfully!');
     }
 
     public function remove_tasks($id)

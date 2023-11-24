@@ -15,9 +15,35 @@
             <b> <a href="{{ route('project_list') }}"><u class="text-info">Projects</u></a> / <span class="project-name">{{ $project->name_project }}</span></b>
         </h1>
     </div>
-    <div class="p-2">
-        <!-- ปุ่มเพิ่ม Task และ Modal -->
-        <a data-bs-toggle="modal" href="#newtask" class="btn btn-primary btn-sm" style="border-radius: 10px;"><span class="ms-1">+ New Task</span></a>
+    <div class="nk-block-head-content">
+        <div class="toggle-wrap nk-block-tools-toggle"><a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu"><em class="icon ni ni-menu-alt-r"></em></a>
+            <div class="toggle-expand-content" data-content="pageMenu">
+                <ul class="nk-block-tools g-3">
+                    <!-- ปุ่มเพิ่ม Task และ Modal -->
+                    <li>
+                        <div class="drodown">
+                            <a href="#" class="dropdown-toggle btn btn-white btn-dim btn-outline-light" data-bs-toggle="dropdown" style="border-radius: 10px;">
+                                <em class="d-none d-sm-inline icon ni ni-filter-alt"></em>
+                                <span>Sort By</span>
+                                <!-- <em class="dd-indc icon ni ni-chevron-right"></em> -->
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                            <!-- <input type="text" class="form-control" id="filterInput" onkeyup="filterBy()" placeholder="Search for names.." title="Type in a name"> -->
+                                <ul class="link-list-opt no-bdr">
+                                    <li><a href="{{ route('sort_tasks', ['id_project' => $project->id_project, 'type' => 'priority']) }}"><span>เรียงตามลำดับความสำคัญ</span></a></li>
+                                    <li><a href="{{ route('sort_tasks', ['id_project' => $project->id_project, 'type' => 'due_date']) }}"><span>เรียงตามวันที่ส่ง</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nk-block-tools-opt d-none d-sm-block">                   
+                        <a data-bs-toggle="modal" href="#newtask" class="btn btn-primary btn-sm" style="border-radius: 10px;"><span class="ms-1">+ New Task</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
         <div class="modal fade" tabindex="-1" role="dialog" id="newtask">
             <div class="modal-dialog modal-md" role="document">
                 <div class="modal-content">
@@ -149,7 +175,7 @@
                 </div>
                 <div class="px-1">
                     <h4 class="name mb-0"><a data-bs-toggle="modal" href="#detailtask-{{ $item->id_task }}" style="color: #464e56;">{{ $item->title }}</a></h4>
-                    <p class="created mb-1">Assigned by: {{ $item->created_by }}</p>
+                    <p class="created mb-1">Assigned by: {{ $item->created_name ? $item->created_name->firstname . ' ' . $item->created_name->lastname . ' ('.$item->created_name->role.')' : '-' }}</p>
                     <p class="quote2">{{ $item->note }}</p>
                 </div>
 
@@ -159,7 +185,7 @@
                     @endforeach
                 </div>
                 <div class="px-1">
-                    <p class="created mb-1">Checklist : {{ $item->created_by }}</p>
+                    <p class="created mb-1">Checklist : </p>
                     <div class="progress progress-lg"><div class="progress-bar progress-bar-striped progress-bar-animated fs-10px" data-progress="{{ $item->percents }}">{{ $item->percents }}%</div></div>
                 </div>
 
@@ -291,7 +317,7 @@
 
                             <div class="px-1">
                                 <h4 class="name mb-0">{{ $item->title }}</h4>
-                                <p class="created mb-1">Assigned by: {{ $item->created_by }}</p>
+                                <p class="created mb-1">Assigned by: {{ $item->created_name ? $item->created_name->firstname . ' ' . $item->created_name->lastname . ' ('.$item->created_name->role.')' : '-' }}</p>
                                 <p class="quote2">{{ $item->note }}</p>
                             </div>
                             <hr>
@@ -368,7 +394,7 @@
                 </div>
                 <div class="px-1">
                     <h4 class="name mb-0"><a data-bs-toggle="modal" href="#detailtask-{{ $item->id_task }}" style="color: #464e56;">{{ $item->title }}</a></h4>
-                    <p class="created mb-1">Assigned by: {{ $item->created_by }}</p>
+                    <p class="created mb-1">Assigned by: {{ $item->created_name ? $item->created_name->firstname . ' ' . $item->created_name->lastname . ' ('.$item->created_name->role.')' : '-' }}</p>
                     <p class="quote2">{{ $item->note }}</p>
                 </div>
 
@@ -378,7 +404,7 @@
                     @endforeach
                 </div>
                 <div class="px-1">
-                    <p class="created mb-1">Checklist : {{ $item->created_by }}</p>
+                    <p class="created mb-1">Checklist : </p>
                     <div class="progress progress-lg"><div class="progress-bar progress-bar-striped progress-bar-animated fs-10px" data-progress="{{ $item->percents }}">{{ $item->percents }}%</div></div>
                 </div>
 
@@ -510,7 +536,7 @@
 
                             <div class="px-1">
                                 <h4 class="name mb-0">{{ $item->title }}</h4>
-                                <p class="created mb-1">Assigned by: {{ $item->created_by }}</p>
+                                <p class="created mb-1">Assigned by: {{ $item->created_name ? $item->created_name->firstname . ' ' . $item->created_name->lastname . ' ('.$item->created_name->role.')' : '-' }}</p>
                                 <p class="quote2">{{ $item->note }}</p>
                             </div>
                             <hr>
@@ -587,7 +613,7 @@
                 </div>
                 <div class="px-1">
                     <h4 class="name mb-0"><a data-bs-toggle="modal" href="#detailtask-{{ $item->id_task }}" style="color: #464e56;">{{ $item->title }}</a></h4>
-                    <p class="created mb-1">Assigned by: {{ $item->created_by }}</p>
+                    <p class="created mb-1">Assigned by: {{ $item->created_name ? $item->created_name->firstname . ' ' . $item->created_name->lastname . ' ('.$item->created_name->role.')' : '-' }}</p>
                     <p class="quote2">{{ $item->note }}</p>
                 </div>
 
@@ -597,7 +623,7 @@
                     @endforeach
                 </div>
                 <div class="px-1">
-                    <p class="created mb-1">Checklist : {{ $item->created_by }}</p>
+                    <p class="created mb-1">Checklist : </p>
                     <div class="progress progress-lg"><div class="progress-bar progress-bar-striped progress-bar-animated fs-10px" data-progress="{{ $item->percents }}">{{ $item->percents }}%</div></div>
                 </div>
 
@@ -729,7 +755,7 @@
 
                             <div class="px-1">
                                 <h4 class="name mb-0">{{ $item->title }}</h4>
-                                <p class="created mb-1">Assigned by: {{ $item->created_by }}</p>
+                                <p class="created mb-1">Assigned by: {{ $item->created_name ? $item->created_name->firstname . ' ' . $item->created_name->lastname . ' ('.$item->created_name->role.')' : '-' }}</p>
                                 <p class="quote2">{{ $item->note }}</p>
                             </div>
                             <hr>
@@ -773,7 +799,7 @@
 
         </div>
 
-        <div class="swim-lane" id="3">
+        <div class="{{ $_SESSION['role'] == 'Chief' ? 'swim-lane' : 'disabled-swim-lane' }}" id="3">
             <header class="kanban-board-header kanban-danger">
                 <div class="kanban-title-board">
                     <div class="kanban-title-content py-1">
@@ -784,7 +810,7 @@
             </header>
 
             @foreach ($status_reject as $item)
-            <div class="taskcard task" id="{{ $item->id_task }}" draggable="true">
+            <div class="taskcard task" id="{{ $item->id_task }}" draggable="{{ $_SESSION['role'] == 'Chief' ? 'true' : 'false' }}">
                 <div class="d-flex justify-content-between px-1">
                     <div class="kanban-title-content justify-content-start">
                         <div class="badge badge-priority text-wrap @php if($item->priority == 0){ echo 'bg-low'; } elseif($item->priority == 1) { echo 'bg-medium'; } elseif($item->priority == 2) { echo 'bg-high'; } else { echo 'bg-none'; } @endphp">
@@ -797,16 +823,22 @@
                             <div class="dropdown-menu dropdown-menu-end" style="">
                                 <ul class="link-list-opt no-bdr">
                                     <li><a href="{{ route('task_detail', $item->id_task) }}"><em class="icon ni ni-edit"></em><span>Checklist</span></a></li>
-                                    <li><a data-bs-toggle="modal" href="#edittask-{{ $item->id_task }}"><em class="icon ni ni-edit"></em><span>Edit Task</span></a></li>
-                                    <li><a href="{{ route('remove_tasks', $item->id_task) }}"><em class="icon ni ni-delete"></em><span>Remove Task</span></a></li>
+                                    @if($_SESSION['role'] == 'Chief')
+                                        <li><a data-bs-toggle="modal" href="#edittask-{{ $item->id_task }}"><em class="icon ni ni-edit"></em><span>Edit Task</span></a></li>
+                                        <li><a href="{{ route('remove_tasks', $item->id_task) }}"><em class="icon ni ni-delete"></em><span>Remove Task</span></a></li>
+                                    @endif
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="px-1">
-                    <h4 class="name mb-0"><a data-bs-toggle="modal" href="#detailtask-{{ $item->id_task }}" style="color: #464e56;">{{ $item->title }}</a></h4>
-                    <p class="created mb-1">Assigned by: {{ $item->created_by }}</p>
+                    @if($_SESSION['role'] == 'Chief')
+                        <h4 class="name mb-0"><a data-bs-toggle="modal" href="#detailtask-{{ $item->id_task }}" style="color: #464e56;">{{ $item->title }}</a></h4>
+                    @else
+                        <h4 class="name mb-0"><a href="#" style="color: #464e56;">{{ $item->title }}</a></h4>
+                    @endif
+                    <p class="created mb-1">Assigned by: {{ $item->created_name ? $item->created_name->firstname . ' ' . $item->created_name->lastname . ' ('.$item->created_name->role.')' : '-' }}</p>
                     <p class="quote2">{{ $item->note }}</p>
                 </div>
 
@@ -816,7 +848,7 @@
                     @endforeach
                 </div>
                 <div class="px-1">
-                    <p class="created mb-1">Checklist : {{ $item->created_by }}</p>
+                    <p class="created mb-1">Checklist : </p>
                     <div class="progress progress-lg"><div class="progress-bar progress-bar-striped progress-bar-animated fs-10px" data-progress="{{ $item->percents }}">{{ $item->percents }}%</div></div>
                 </div>
 
@@ -948,7 +980,7 @@
 
                             <div class="px-1">
                                 <h4 class="name mb-0">{{ $item->title }}</h4>
-                                <p class="created mb-1">Assigned by: {{ $item->created_by }}</p>
+                                <p class="created mb-1">Assigned by: {{ $item->created_name ? $item->created_name->firstname . ' ' . $item->created_name->lastname . ' ('.$item->created_name->role.')' : '-' }}</p>
                                 <p class="quote2">{{ $item->note }}</p>
                             </div>
                             <hr>
@@ -999,5 +1031,23 @@
     @section('js_script')
 
     <script src="{{ asset('assets/js/kanban.js') }}"></script>
+    <script>
+        function filterBy() {
+            var input, filter, ul, li, a, i, txtValue;
+            input = document.getElementById("filterInput");
+            filter = input.value.toUpperCase();
+            ul = document.getElementById("myUL");
+            li = ul.getElementsByTagName("li");
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("a")[0];
+                txtValue = a.textContent || a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        }
+    </script>
 
     @endsection
