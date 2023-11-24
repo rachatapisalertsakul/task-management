@@ -1,0 +1,12 @@
+HTTrack3.49-2+htsswf+htsjava launched on Thu, 27 Jul 2023 13:15:28 at https://dashlite.net/demo6/index.html +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar
+(winhttrack -qwC2%Ps2u1%s%uN0%I0p3DaK0H0%kf2A25000%f#f -F "Mozilla/4.5 (compatible; HTTrack 3.0x; Windows 98)" -%F "<!-- Mirrored from %s%s by HTTrack Website Copier/3.x [XR&CO'2014], %s -->" -%l "en, *" https://dashlite.net/demo6/index.html -O1 "C:\Users\rachata\Desktop\dashlite" +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+13:17:10	Error: 	"Not Found" (404) at link https://dashlite.net/demo6/images/qr/qr-code.png (from https://dashlite.net/demo6/components/forms/wizard/two-factor-auth.html)
+
+HTTrack Website Copier/3.49-2 mirror complete in 1 minutes 54 seconds : 355 links scanned, 353 files written (28760679 bytes overall) [21217565 bytes received at 186118 bytes/sec], 9380197 bytes transferred using HTTP compression in 138 files, ratio 18%, 35.5 requests per connection
+(1 errors, 0 warnings, 0 messages)

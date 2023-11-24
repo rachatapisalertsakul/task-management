@@ -1,0 +1,30 @@
+.project-head .project-title .user-avatar {
+  border-radius: 10px;
+}
+
+.project-head {
+  margin-bottom: 0.5rem;
+}
+
+.project-details {
+  margin-bottom: 1rem;
+  font-size: 12px;
+  font-weight: 400;
+  color: #868e94;
+}
+
+.card-bordered {
+  border-radius: 1rem;
+}
+
+.btn-dim.btn-primary {
+  border-radius: 10px;
+}
+
+.btn.btn-primary {
+  border-radius: 10px;
+}
+
+.modal-content {
+  border-radius: 20px;
+}

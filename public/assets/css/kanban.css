@@ -1,0 +1,272 @@
+/* ---- RESET/BASIC STYLING ---- */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+
+  }
+  
+  *::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .board {
+    width: 100%;
+    height: 100vh;
+    /* overflow: scroll; */
+    background-position: center;
+    background-size: cover;
+  }
+  
+  /* ---- FORM ---- */
+  #todo-form {
+    padding: 32px 32px 0;
+  }
+  
+  #todo-form input {
+    padding: 12px;
+    margin-right: 12px;
+    width: 225px;
+  
+    border-radius: 4px;
+    border: none;
+  
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);
+    background: white;
+  
+    font-size: 14px;
+    outline: none;
+  }
+  
+  #todo-form button {
+    padding: 12px 32px;
+  
+    border-radius: 4px;
+    border: none;
+  
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);
+    background: #ffffff;
+    color: black;
+  
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  /* ---- BOARD ---- */
+  .lanes {
+    display: flex;
+    align-items: flex-start;
+    justify-content: start;
+    gap: 5px;
+  
+    padding: 10px 0px;
+  
+    overflow-x: scroll;
+    height: 100%;
+  }
+  
+  .heading {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .swim-lane {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  
+    /* background: #f4f4f4;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25); */
+  
+    padding: 12px;
+    border-radius: 4px;
+    width: 18.5rem;
+    height: 100%;
+    min-height: 100px;
+  
+    flex-shrink: 0;
+  }
+  
+  .task {
+    background: white;
+    color: black;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+  
+    padding: 12px;
+    border-radius: 4px;
+  
+    font-size: 16px;
+    margin-bottom: 0rem;
+    cursor: move;
+  }
+  
+  .is-dragging {
+    scale: 1.05;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);
+    background: rgb(50, 50, 50);
+    color: white;
+  }
+
+  .modal-content {
+    border-radius: 15px;
+  }
+
+  .btn.btn-primary {
+    border-radius: 8px;
+  }
+
+  .col-form-label {
+    font-size: 12px;
+  }
+
+  .btn-file {
+    color: #8d929a;
+    font-size: 9px;
+    padding: 0px 10px;
+    font-weight: 400;
+    font-family: 'Anuphan', sans-serif;
+  }
+
+  .badge-priority {
+    width: 2rem;
+    height: 12px;
+    border-radius: 10px;
+    line-height: initial;
+    font-size: 9px;
+    width: initial;
+  }
+
+  .badge-priority.bg-high {
+    border-color: indianred;
+    background: indianred;
+  }
+
+  .badge-priority.bg-medium {
+    border-color: cornflowerblue;
+    background: cornflowerblue;
+  }
+
+  .badge-priority.bg-low {
+    border-color: darkseagreen;
+    background: darkseagreen;
+  }
+
+  .kanban-board-header {
+    border-radius: 10px;
+    margin-bottom: 0.5rem;
+  }
+
+  .custom-control-pro.no-control .custom-control-label {
+    padding: 0.25rem 1rem;
+  }
+  
+  .taskcard{
+    width: 270px;
+    background-color: #fff;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);    
+  }
+  .star{
+    font-size: 20px !important;
+    color: #b1b4b7;
+  }
+  .dot{
+    font-size: 20px !important;
+    color: #b1b4b7;
+  }
+  .round{
+    border-radius: 50%;
+    background-color: #eee;
+    width: 33px;
+    height: 33px;
+    margin-bottom: -10px;
+    align-items: center;
+    justify-content: center;
+  }
+  .name{
+    font-size: 18px;
+    color: #464e56;
+    font-weight: 600;
+    text-align: left;
+  }
+  .created{
+    font-size: 9px;
+    color: #a0a0a0;
+    font-weight: 300;
+    text-align: left;
+  }
+  .quote2{
+    font-size: 12px;
+    font-weight: 400;
+    color: #868e94;
+    text-align: left;
+  }
+  .detail{
+    font-size: 10px;
+    font-weight: 400;
+    color: #868e94;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 180px;
+  }
+  .img1{
+    position: relative;
+    left: 5px;
+    z-index: 28;
+    border: 0.5px solid #6ebde4;
+    border-radius: 50%;
+    background-color: #bcd8e6;
+  }
+  .img2{
+    position: relative;
+    left: 0px;
+    z-index: 29;
+    border: 0.5px solid #6ebde4;
+    border-radius: 50%;
+    background-color: #bcd8e6;
+  }
+  .img3{
+    position: relative;
+    z-index: 30;  
+    left: -5px;
+    border: 0.5px solid #6ebde4;
+    border-radius: 50%; 
+    background-color: #bcd8e6;
+  }
+  .img4{
+    position: relative;
+    z-index: 30;  
+    left: -10px;
+    border: 0.5px solid #6ebde4;
+    border-radius: 50%; 
+    background-color: #bcd8e6;
+  }
+  .img5{
+    position: relative;
+    z-index: 30;  
+    left: -15px;
+    border: 0.5px solid #6ebde4;
+    border-radius: 50%; 
+    background-color: #bcd8e6;
+  }
+  .task{
+    color: #727475;
+  }
+  .date{
+    color: #727475;
+  }
+  .imgfix{
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    top: 2px;
+  }
