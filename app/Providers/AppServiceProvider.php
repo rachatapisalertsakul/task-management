@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $menu = DB::table('menu')->get();
         $host = $request->getSchemeAndHttpHost();
-        $this->app['request']->server->set('HTTPS', true);
+        
         View::share(['menu'=> $menu,'host'=>$host]);
     }
 }

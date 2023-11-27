@@ -54,7 +54,7 @@
                             <h5>{{$m->name}}</h5>
                         </div>
                         <div class="card-inner">
-                            <img src="/images/svg/{{$m->svg}}.svg" width="100" height="100" style="fill:white;">
+                            <img src="/images/svg/{{$m->svg}}.png" width="100" height="100" style="fill:white;">
                         </div>
                     </div>
                 </a>

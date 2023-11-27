@@ -100,7 +100,7 @@
                                 @else
                                 <li class="nk-menu-item has-sub">
                                     <a href="{{$m->route}}" class="nk-menu-link {{ $_SESSION['is_block'] == 'Y' ? 'disabled' : ' ' }}">
-                                        <img src="/images/svg/{{$m->svg}}.svg" width="25" height="25" style="fill:white;">
+                                        <img src="/images/svg/{{$m->svg}}.png" width="25" height="25" style="fill:white;">
                                         <span class="nk-menu-text">&nbsp;&nbsp;{{$m->name}}</span>
                                     </a>
                                 </li>

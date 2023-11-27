@@ -106,7 +106,10 @@
                             <p>{{ $p->desciption_project }}</p>
                         </div>
                         <div class="project-meta">
-                            <a href="{{ route('task_list',$p->id_project) }}" class="btn btn-dim btn-primary">{{ count($p->task) }} Task <em class="icon ni ni-pen-alt-fill" style="padding-left: 5px;"></em></a>
+                            <div>
+                                <a href="{{ route('task_list',$p->id_project) }}" class="btn btn-dim btn-primary">{{ count($p->task) }} Task <em class="icon ni ni-pen-alt-fill" style="padding-left: 5px;"></em></a>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#project_library_{{ $p->id_project }}" class="btn btn-dim btn-primary">Library <em class="icon ni ni-book-fill" style="padding-left: 5px;"></em></a>
+                            </div>
                             <ul class="project-users g-1">
                                 @foreach($p->team as $key => $t)
                                     @if($key < 2)
@@ -170,6 +173,17 @@
                                     </div>
                                 </div>
                                 <hr>
+                                <div class="nk-block nk-block-lg">
+                                    <div class="nk-block-head">
+                                    <div class="nk-block-head-content">
+                                        <h5 class="title nk-block-title">Project Library</h5>
+                                    </div>
+                                    </div>
+                                    <div class="card">
+                                        <textarea class="form-control" id="project_library" name="project_library">{{ $p->library_project }}</textarea>
+                                    </div>
+                                </div>
+                                <hr>
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-primary">Update Project</button>
                                 </div>
@@ -180,6 +194,26 @@
             </div>
         </div>
         <!-- ------------------------------------ MODAL EDIT ---------------------------------- -->
+
+        <!-- ------------------------------------ MODAL LIBRARY ---------------------------------- -->
+        <div class="modal fade" tabindex="-1" id="project_library_{{ $p->id_project }}">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            Project Library
+                        </h5>
+                        <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close"><em class="icon ni ni-cross"></em></a>
+                    </div>
+                    <div class="card-inner">
+                        <div class="preview-block">
+                            {!! nl2br($p->library_project) !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ------------------------------------ MODAL LIBRARY ---------------------------------- -->
 
         @endforeach
     </div>

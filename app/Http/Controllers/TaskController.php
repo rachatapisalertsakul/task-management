@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Mail\TaskNotificationMail;
 use App\Mail\ProjectNotificationMail;
+use App\Mail\RejectNotificationMail;
 use Illuminate\Support\Facades\Mail;
 
 class TaskController extends Controller
@@ -63,6 +64,7 @@ class TaskController extends Controller
         DB::table('project')->insert([
             'name_project' => $request->name_project,
             'desciption_project' => $request->desciption_project,
+            'library_project' => $request->project_library
         ]);
 
         // เพิ่มสมาชิกในโปรเจคนั้น ใน table project_team
@@ -87,7 +89,8 @@ class TaskController extends Controller
         try {
             DB::table('project')->where('id_project', $id)->update([
                 'name_project' => $request->name_project,
-                'desciption_project' => $request->desciption_project
+                'desciption_project' => $request->desciption_project,
+                'library_project' => $request->project_library
             ]);
 
             // เคลียร์สมาชิกใน project นั้นก่อน
@@ -274,6 +277,23 @@ class TaskController extends Controller
                 'index' => 100,
                 'updated_at' => now()
             ]);
+        }
+
+        if($status == '3') { // if reject
+            $task = DB::table('task')->where('id_task', $id)->first();
+
+            if($task->assign_to) {
+                $assign = explode(',',$task->assign_to);
+                foreach($assign as $key => $item) {
+                    $user = DB::table('user')->where('id_user', $item)->first();
+                    Mail::to($user->email)->send(new RejectNotificationMail($task->title, $task->note));
+                }
+            }
+
+            if($task->created_by) {
+                $user = DB::table('user')->where('id_user', $task->created_by)->first();
+                Mail::to($user->email)->send(new RejectNotificationMail($task->title, $task->note));
+            }
         }
 
         // ดึงค่า count ไป update หน้า view
