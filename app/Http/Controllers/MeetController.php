@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
+use App\Mail\MeetingNotificationMail;
+use Illuminate\Support\Facades\Mail;
 
 class MeetController extends Controller
 {
@@ -41,6 +43,9 @@ class MeetController extends Controller
                 'ref_id_meeting' => (DB::table('meeting_event')->orderBy('id_meeting', 'DESC')->first())->id_meeting,
                 'ref_id_user' => $request->meeting_member[$i],
             ]);
+
+            $user = DB::table('user')->where('id_user', $request->meeting_member[$i])->first();
+            Mail::to($user->email)->send(new MeetingNotificationMail($request->title, $request->link, $request->description, $request->date_start));
         }
         return redirect()->back()->with('success', 'เพิ่มการประชุมเรียบร้อย');
     }
