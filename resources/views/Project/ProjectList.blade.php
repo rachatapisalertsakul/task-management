@@ -181,7 +181,7 @@
                                     </div>
                                     </div>
                                     <div class="card">
-                                        <textarea class="form-control" id="project_library" name="project_library">{{ $p->library_project }}</textarea>
+                                        <textarea class="summernote-basic" id="summernote_{{ $p->id_project }}" name="project_library">{!! nl2br($p->library_project) !!}</textarea>
                                     </div>
                                 </div>
                                 <hr>
@@ -239,27 +239,38 @@
                                 <div class="form-group">
                                     <label class="form-label" for="name_project">Project Name :</label>
                                     <div class="form-control-wrap">
-                                        <input type="text" class="form-control" id="name_project" name="name_project" placeholder="" />
+                                        <input type="text" class="form-control" id="name_project" name="name_project" placeholder="" required />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group"><label class="form-label" for="desciption_project">Project Description :</label>
                                     <div class="form-control-wrap">
-                                        <textarea class="form-control no-resize" id="desciption_project" name="desciption_project"></textarea>
+                                        <textarea class="form-control no-resize" id="desciption_project" name="desciption_project" required></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group"><label class="form-label">Members :</label>
                                     <div class="form-control-wrap">
-                                        <select class="form-select js-select2" multiple="multiple" data-placeholder="Select Multiple options" name="project_team[]">
+                                        <select class="form-select js-select2" multiple="multiple" data-placeholder="Select Multiple options" name="project_team[]" required>
                                             @foreach($user as $u)
                                             <option value="{{ $u->id_user }}">{{ $u->firstname }} {{ $u->lastname }} - <b class="text-primary">{{ $u->role }}</b></option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="nk-block nk-block-lg">
+                            <div class="nk-block-head">
+                            <div class="nk-block-head-content">
+                                <h5 class="title nk-block-title">Project Library</h5>
+                            </div>
+                            </div>
+                            <div class="card">
+                                <textarea class="summernote-basic" id="summernote" name="project_library"></textarea>
                             </div>
                         </div>
                         <hr>
@@ -272,6 +283,10 @@
         </div>
     </div>
 </div>
+
+@endsection
+
+@section('js_script')
 
 <script>
 function filterBy() {
@@ -290,6 +305,17 @@ function filterBy() {
         }
     }
 }
+
+$(document).ready(function() {
+    $('#summernote').summernote({ height: 140 });
+    @foreach($project as $p)
+        $('#summernote_{{ $p->id_project }}').summernote({ height: 140 });
+    @endforeach
+});
 </script>
+
+<link rel="stylesheet" href="{{ asset('assets/css/editors/summernotedeae.css?ver=3.2.1') }}">
+<script src="{{ asset('assets/js/libs/editors/summernotedeae.js?ver=3.2.1') }}"></script>
+<script src="{{ asset('assets/js/editorsdeae.js?ver=3.2.1') }}"></script>
 
 @endsection

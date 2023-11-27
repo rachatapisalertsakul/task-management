@@ -98,12 +98,14 @@
                                 </li>
                                 @endif
                                 @else
+                                @if($_SESSION['username'] != 'admin')
                                 <li class="nk-menu-item has-sub">
                                     <a href="{{$m->route}}" class="nk-menu-link {{ $_SESSION['is_block'] == 'Y' ? 'disabled' : ' ' }}">
                                         <img src="/images/svg/{{$m->svg}}.PNG" width="25" height="25" style="fill:white;">
                                         <span class="nk-menu-text">&nbsp;&nbsp;{{$m->name}}</span>
                                     </a>
                                 </li>
+                                @endif
                                 @endif
                                 @endforeach
                             </ul>

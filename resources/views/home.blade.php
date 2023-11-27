@@ -31,35 +31,37 @@
     <div class="card-inner">
         <div class="row g-gs text-center">
             @foreach($menu as $m)
-            @if($m->id_menu == 4)
-            @if($_SESSION['username'] == 'admin')
-            <div class="col-md-3 col-6 col-lg-6">
-                <a href="{{$m->route}}" class="{{ $_SESSION['is_block'] == 'Y' ? 'disabled' : ' ' }}">
-                    <div class="card card-in text-white bg-{{$m->color}}">
-                        <div class="card-header">
-                            <h5>{{$m->name}}</h5>
-                        </div>
-                        <div class="card-inner">
-                            <img src="/images/svg/{{$m->svg}}.svg" width="100" height="100" style="fill:white;">
-                        </div>
+                @if($m->id_menu == 4)
+                    @if($_SESSION['username'] == 'admin')
+                    <div class="col-md-3 col-6 col-lg-6">
+                        <a href="{{$m->route}}" class="{{ $_SESSION['is_block'] == 'Y' ? 'disabled' : ' ' }}">
+                            <div class="card card-in text-white bg-{{$m->color}}">
+                                <div class="card-header">
+                                    <h5>{{$m->name}}</h5>
+                                </div>
+                                <div class="card-inner">
+                                    <img src="/images/svg/{{$m->svg}}.svg" width="100" height="100" style="fill:white;">
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                </a>
-            </div>
-            @endif
-            @else
-            <div class="col-md-3 col-6 col-lg-6">
-                <a href="{{$m->route}}" class="{{ $_SESSION['is_block'] == 'Y' ? 'disabled' : ' ' }}">
-                    <div class="card card-in text-white bg-{{$m->color}}">
-                        <div class="card-header">
-                            <h5>{{$m->name}}</h5>
-                        </div>
-                        <div class="card-inner">
-                            <img src="/images/svg/{{$m->svg}}.PNG" width="100" height="100" style="fill:white;">
-                        </div>
+                    @endif
+                @else
+                    @if($_SESSION['username'] != 'admin')
+                    <div class="col-md-3 col-6 col-lg-6">
+                        <a href="{{$m->route}}" class="{{ $_SESSION['is_block'] == 'Y' ? 'disabled' : ' ' }}">
+                            <div class="card card-in text-white bg-{{$m->color}}">
+                                <div class="card-header">
+                                    <h5>{{$m->name}}</h5>
+                                </div>
+                                <div class="card-inner">
+                                    <img src="/images/svg/{{$m->svg}}.PNG" width="100" height="100" style="fill:white;">
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                </a>
-            </div>
-            @endif
+                    @endif
+                @endif
             @endforeach
         </div>
     </div>
