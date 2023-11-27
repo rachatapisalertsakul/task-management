@@ -121,6 +121,7 @@
                                     <li>
                                         <div class="user-avatar bg-light sm"><span>+{{count($p->team)-2}}</span></div>
                                     </li>
+                                    @break
                                     @endif
                                 @endforeach
                             </ul>
