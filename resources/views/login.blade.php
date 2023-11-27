@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
     <link rel="shortcut icon" href="../../images/favicon.png">
-    <title>Login | DashLite Admin Template</title>
+    <title>Task Management</title>
     <link rel="stylesheet" href="../../assets/css/dashlitedeae.css?ver=3.2.1">
     <link id="skin-default" rel="stylesheet" href="../../assets/css/themedeae.css?ver=3.2.1">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-91615293-4"></script>
