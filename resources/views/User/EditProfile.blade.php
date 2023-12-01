@@ -2,7 +2,6 @@
 @section('content')
 
 <div class="card card-bordered card-preview">
-
     <div class="card-inner">
         <div class="preview-block">
             <form action="{{ route('update_user',$user->id_user) }}" method="post" enctype="multipart/form-data">
@@ -23,6 +22,7 @@
                                     </select>
                                 </div>
                             </div>
+                            @if($_SESSION['username'] != 'admin')<input type="hidden" name="role" value="{{$user->role}}" />@endif
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -45,7 +45,8 @@
                         <div class="form-group">
                             <label class="form-label" for="username">Username</label>
                             <div class="form-control-wrap">
-                                <input type="text" class="form-control" id="username" name="username" placeholder="Username" value="{{$user->username}}" {{ $_SESSION['username'] == 'admin' ? ' ' : 'disabled' }}/>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Username" value="{{$user->username}}" {{ $_SESSION['username'] != 'admin' ? 'disabled' : '' }} />
+                                @if($_SESSION['username'] != 'admin')<input type="hidden" name="username" value="{{$user->username}}" />@endif
                             </div>
                         </div>
                     </div>
@@ -53,7 +54,8 @@
                         <div class="form-group">
                             <label class="form-label" for="password">Password</label>
                             <div class="form-control-wrap">
-                                <input type="text" class="form-control" id="password" name="password" placeholder="password" value="{{$user->password}}" {{ $_SESSION['username'] == 'admin' ? ' ' : 'disabled' }}/>
+                                <input type="text" class="form-control" id="password" name="password" placeholder="password" value="{{$user->password}}" {{ $_SESSION['username'] != 'admin' ? 'disabled' : '' }} />
+                                @if($_SESSION['username'] != 'admin')<input type="hidden" name="password" value="{{$user->password}}" />@endif
                             </div>
                         </div>
                     </div>
@@ -114,6 +116,5 @@
             </form>
         </div>
     </div>
-
 </div>
 @endsection
